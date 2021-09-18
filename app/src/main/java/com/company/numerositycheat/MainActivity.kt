@@ -4,10 +4,12 @@ import android.graphics.Paint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -33,12 +35,14 @@ class MainActivity : ComponentActivity() {
             NumerosityCheatTheme {
                 // A surface container using the 'background' color from the theme
                 Surface() {
-                    val operand = Operand.Addition
-                    val target = 28
-                    val options = listOf(
-                        10, 17, 18, 15, 14
-                    )
-                    val result = calculateAddition(options, target)
+                    val operand = remember { mutableStateOf(value = Operand.Addition) }
+                    val target = remember { mutableStateOf(value = 28) }
+                    val options = remember {
+                        mutableListOf(
+                            10, 17, 18, 15, 14
+                        )
+                    }
+                    val result = calculate(options, target.value, operand.value)
 
                     // Various mutable variables
 
@@ -59,57 +63,66 @@ class MainActivity : ComponentActivity() {
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(150.dp)
+                                .height(200.dp)
                         ) {
-                            Button(
+                            Box(
                                 modifier = Modifier
                                     .weight(0.5f)
                                     .padding(start = 10.dp, top = 10.dp, bottom = 10.dp)
-                                    .fillMaxSize(),
-                                onClick = {
-                                },
-                                colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
+                                    .fillMaxSize()
+                                    .background(Color.Transparent)
                             ) {
                                 Box(modifier = Modifier.fillMaxSize()) {
                                     Column(
-                                        verticalArrangement = Arrangement.Top,
-                                        horizontalAlignment = Alignment.Start
-                                    ) {
-                                        Text(
-                                            text = "OPERATION",
-                                            fontWeight = FontWeight.Medium,
-                                            fontSize = 20.sp,
-                                        )
-                                    }
-                                    Column(
                                         modifier = Modifier
-                                            .fillMaxSize()
-                                            .padding(top = 30.dp),
+                                            .fillMaxSize(),
                                         verticalArrangement = Arrangement.Center,
                                         horizontalAlignment = Alignment.CenterHorizontally
                                     ) {
-                                        Canvas(
-                                            modifier = Modifier
-                                                .size(75.dp)
-                                        ) {
-                                            this.drawCircle(
-                                                Brush.radialGradient(
-                                                    listOf(
-                                                        Color(53, 125, 196),
-                                                        Color(32, 89, 145),
-                                                    )
-                                                )
-                                            )
-                                            drawContext.canvas.nativeCanvas.apply {
-                                                drawText(
-                                                    "+",
-                                                    57f,
-                                                    175f,
-                                                    Paint().apply {
-                                                        color = android.graphics.Color.WHITE
-                                                        textSize = 200f
+                                        for (i in 0..1) {
+                                            Row(
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .weight(0.5f)
+                                            ) {
+                                                for (j in 0..1) {
+                                                    Button(
+                                                        shape = RoundedCornerShape(5.dp),
+                                                        modifier = Modifier
+                                                            .padding(2.dp)
+                                                            .weight(0.5f)
+                                                            .fillMaxSize()
+                                                            .shadow(5.dp),
+                                                        border = BorderStroke(
+                                                            5.dp,
+                                                            Color(0.2f, 0.2f, 0.2f, 0.3f)
+                                                        ),
+                                                        onClick = {
+
+                                                        },
+                                                        contentPadding = PaddingValues(),
+
+                                                        ) {
+                                                        Box(
+                                                            modifier = Modifier.fillMaxSize(),
+                                                            contentAlignment = Alignment.Center
+                                                        ) {
+                                                            val text = when (i + j) {
+                                                                0 -> "+"
+                                                                1 -> "-"
+                                                                2 -> "÷"
+                                                                else -> "×"
+                                                            }
+                                                            Text(
+                                                                modifier = Modifier.offset(y = -3.dp),
+                                                                text = text,
+                                                                fontWeight = FontWeight.Black,
+                                                                fontSize = 60.sp,
+                                                                color = Color.White,
+                                                            )
+                                                        }
                                                     }
-                                                )
+                                                }
                                             }
                                         }
                                     }
@@ -127,27 +140,21 @@ class MainActivity : ComponentActivity() {
                             ) {
                                 Box(modifier = Modifier.fillMaxSize()) {
                                     Column(
-                                        verticalArrangement = Arrangement.Top,
-                                        horizontalAlignment = Alignment.Start
+                                        modifier = Modifier.fillMaxSize(),
+                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                    verticalArrangement = Arrangement.Center
                                     ) {
-                                        Text(
-                                            text = "TARGET",
-                                            fontWeight = FontWeight.Medium,
-                                            fontSize = 20.sp,
-                                        )
-                                    }
-                                    Column(
-                                        modifier = Modifier
-                                            .fillMaxSize()
-                                            .padding(top = 25.dp),
-                                        verticalArrangement = Arrangement.Center,
-                                        horizontalAlignment = Alignment.CenterHorizontally
-                                    ) {
-                                        Text(
-                                            text = "0",
-                                            fontWeight = FontWeight.Black,
-                                            fontSize = 60.sp,
-                                        )
+                                            Text(
+                                                text = "TARGET",
+                                                fontWeight = FontWeight.Medium,
+                                                fontSize = 20.sp,
+                                            )
+                                            Text(
+                                                text = "0",
+                                                fontWeight = FontWeight.Black,
+                                                fontSize = 50.sp,
+                                            )
+
                                     }
                                 }
                             }
@@ -160,51 +167,56 @@ class MainActivity : ComponentActivity() {
                                 .fillMaxSize(),
                         ) {
                             Box(modifier = Modifier.fillMaxSize()) {
-                                Column(
-                                    modifier = Modifier,
-                                    verticalArrangement = Arrangement.Center,
-                                    horizontalAlignment = Alignment.CenterHorizontally
-                                ) {
-                                    Text(
-                                        text = "OPTIONS",
-                                        fontWeight = FontWeight.Medium,
-                                        fontSize = 30.sp,
-                                        color = Color.White
-                                    )
-                                    Button(
-                                        modifier = Modifier.fillMaxSize(),
-                                        contentPadding = PaddingValues(),
-                                        onClick = {
 
-                                        },
-                                        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent)
-                                    ) {
-                                        Box(
-                                            modifier = Modifier
-                                                .fillMaxSize()
-                                                .background(
-                                                    Brush.verticalGradient(
-                                                        listOf(
-                                                            Color(85, 32, 153),
-                                                            Color(114, 61, 184)
-                                                        )
+                                Button(
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentPadding = PaddingValues(),
+                                    onClick = {
+
+                                    },
+                                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent)
+                                ) {
+
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                            .background(
+                                                Brush.verticalGradient(
+                                                    listOf(
+                                                        Color(85, 32, 153),
+                                                        Color(114, 61, 184)
                                                     )
                                                 )
-                                                .border(
-                                                    5.dp,
-                                                    Color.White
-                                                ),
-                                            contentAlignment = Alignment.Center
+                                            )
+                                            .border(
+                                                5.dp,
+                                                Color.White
+                                            ),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Column(
+                                            modifier = Modifier
+                                                .fillMaxSize()
+                                                .padding(10.dp),
+                                            verticalArrangement = Arrangement.Top,
+                                            horizontalAlignment = Alignment.Start
                                         ) {
                                             Text(
-                                                text = "0",
-                                                textAlign = TextAlign.Center,
-                                                fontWeight = FontWeight.Black,
-                                                color = Color.White,
-                                                fontSize = 60.sp,
+                                                text = "OPTIONS",
+                                                fontWeight = FontWeight.Medium,
+                                                fontSize = 30.sp,
+                                                color = Color.White
                                             )
                                         }
+                                        Text(
+                                            text = "0",
+                                            textAlign = TextAlign.Center,
+                                            fontWeight = FontWeight.Black,
+                                            color = Color.White,
+                                            fontSize = 60.sp,
+                                        )
                                     }
+
                                 }
                             }
 
@@ -226,7 +238,10 @@ class MainActivity : ComponentActivity() {
                                 Column(
                                     verticalArrangement = Arrangement.Top,
                                     horizontalAlignment = Alignment.Start,
-                                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
+                                    modifier = Modifier.padding(
+                                        horizontal = 20.dp,
+                                        vertical = 10.dp
+                                    )
                                 ) {
                                     Text(
                                         text = "RESULT",
@@ -236,7 +251,8 @@ class MainActivity : ComponentActivity() {
                                 }
                                 Column(
                                     modifier = Modifier
-                                        .fillMaxSize().padding(top = 10.dp),
+                                        .fillMaxSize()
+                                        .padding(top = 10.dp),
                                     verticalArrangement = Arrangement.Center,
                                     horizontalAlignment = Alignment.CenterHorizontally
                                 ) {

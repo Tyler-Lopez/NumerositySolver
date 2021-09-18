@@ -1,8 +1,8 @@
 package com.company.numerositycheat
 
-fun calculateAddition(arr: List<Int>, target: Int): String {
+fun calculate(arr: List<Int>, target: Int, operand: Operand): String {
     val returnList: MutableList<Int> = mutableListOf()
-    calculateAddition(arr, target, returnList)
+    calculate(arr, target, returnList, operand)
     val stringBuilder = StringBuilder()
     for (element in returnList) {
         stringBuilder.append(" $element ")
@@ -10,7 +10,7 @@ fun calculateAddition(arr: List<Int>, target: Int): String {
     return stringBuilder.toString()
 }
 
-fun calculateAddition(remaining: List<Int>, target: Int, output: MutableList<Int>) {
+private fun calculate(remaining: List<Int>, target: Int, output: MutableList<Int>, operand: Operand) {
     // If remaining is not inserted, just copy from the mutable list
 
     // For each one of the remaining elements in this trace
@@ -19,17 +19,23 @@ fun calculateAddition(remaining: List<Int>, target: Int, output: MutableList<Int
         val newRemaining = ArrayList(remaining)
         val trace = listOf(intAt)
         newRemaining.removeAt(i)
-        calculateAdditionRecursive(newRemaining, trace, target, intAt, output)
+        calculateRecursive(newRemaining, trace, target, intAt, output, operand)
     }
 }
 
-private fun calculateAdditionRecursive(
+private fun calculateRecursive(
     remaining: ArrayList<Int>,
     trace: List<Int>,
     target: Int,
     sum: Int,
-    output: MutableList<Int>
-) {
+    output: MutableList<Int>,
+    operand: Operand,
+    ) {
+    // Base-cases for searches which would be ineffective
+    when {
+        (operand == Operand.Addition || operand == Operand.Multiplication) -> if (sum > target) return
+        (operand == Operand.Subtraction || operand == Operand.Division) -> if (sum < target) return
+    }
     // Base case
     if (sum == target) {
         if (output.isEmpty()) {
@@ -47,12 +53,21 @@ private fun calculateAdditionRecursive(
             newTrace.add(element)
         newTrace.add(intAt)
         newRemaining.removeAt(i)
-        calculateAdditionRecursive(
+        // New sum
+        val newSum =
+            when (operand) {
+                Operand.Addition -> sum + intAt
+                Operand.Subtraction -> sum - intAt
+                Operand.Multiplication -> sum * intAt
+                Operand.Division -> sum / intAt
+            }
+        calculateRecursive(
             newRemaining,
             newTrace,
             target,
-            sum + intAt,
-            output
+            newSum,
+            output,
+            operand
         )
     }
 }
