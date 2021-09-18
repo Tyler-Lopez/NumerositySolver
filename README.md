@@ -1,4 +1,4 @@
-# NumerosityCheat
+# NumerositySolver
 Game-based IQ-tests used in interview screening, which HireVue utilizes, are unethical. This in-development Android app will automatically solve Numerosity arithmetic for you, instantly yielding the correct answer.
 
 ## What is Numerosity?
