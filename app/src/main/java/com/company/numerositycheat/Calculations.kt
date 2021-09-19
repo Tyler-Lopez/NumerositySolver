@@ -1,20 +1,21 @@
 package com.company.numerositycheat
 
-fun calculate(arr: List<Int>, target: Int, operand: Operand): String {
+fun calculate(arr: List<Int>, target: Int, operand: Operand): List<Int> {
     val returnList: MutableList<Int> = mutableListOf()
-    calculate(arr, target, returnList, operand)
+    calculate(arr as List<Double>, target.toDouble(), returnList, operand)
     val stringBuilder = StringBuilder()
     for (element in returnList) {
         stringBuilder.append(" $element ")
     }
-    return stringBuilder.toString()
+    if(returnList.isEmpty()) stringBuilder.append("N/A")
+    return returnList
 }
 
-private fun calculate(remaining: List<Int>, target: Int, output: MutableList<Int>, operand: Operand) {
+private fun calculate(remaining: List<Double>, target: Double, output: MutableList<Int>, operand: Operand) {
     // If remaining is not inserted, just copy from the mutable list
 
     // For each one of the remaining elements in this trace
-    for (i in 0 until remaining.lastIndex) {
+    for (i in 0..remaining.lastIndex) {
         val intAt = remaining[i]
         val newRemaining = ArrayList(remaining)
         val trace = listOf(intAt)
@@ -24,10 +25,10 @@ private fun calculate(remaining: List<Int>, target: Int, output: MutableList<Int
 }
 
 private fun calculateRecursive(
-    remaining: ArrayList<Int>,
-    trace: List<Int>,
-    target: Int,
-    sum: Int,
+    remaining: ArrayList<Double>,
+    trace: List<Double>,
+    target: Double,
+    sum: Double,
     output: MutableList<Int>,
     operand: Operand,
     ) {
@@ -37,18 +38,18 @@ private fun calculateRecursive(
         (operand == Operand.Subtraction || operand == Operand.Division) -> if (sum < target) return
     }
     // Base case
-    if (sum == target) {
+    if (sum == target && trace.size > 1) {
         if (output.isEmpty()) {
             for (element in trace) {
-                output.add(element)
+                if (element % 1.0 == 0.0) output.add(element.toInt()) // Ensure math works for some division
             }
         }
     }
     // For each one of the remaining elements in this trace
-    for (i in 0 until remaining.lastIndex) {
+    for (i in 0..remaining.lastIndex) {
         val intAt = remaining[i]
         val newRemaining = ArrayList(remaining)
-        val newTrace = mutableListOf<Int>()
+        val newTrace = mutableListOf<Double>()
         for (element in trace)
             newTrace.add(element)
         newTrace.add(intAt)
