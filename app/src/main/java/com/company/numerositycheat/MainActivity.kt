@@ -290,9 +290,9 @@ class MainActivity : ComponentActivity() {
                                         Column(
                                             modifier = Modifier
                                                 .fillMaxSize()
-                                                .padding(10.dp),
+                                                .padding(5.dp),
                                             verticalArrangement = Arrangement.Top,
-                                            horizontalAlignment = Alignment.Start
+                                            horizontalAlignment = Alignment.CenterHorizontally
                                         ) {
                                             if (result.size < 5) {
                                                 Text(
