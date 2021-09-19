@@ -2,12 +2,9 @@ package com.company.numerositycheat
 
 fun calculate(arr: List<Int>, target: Int, operand: Operand): List<Int> {
     val returnList: MutableList<Int> = mutableListOf()
+    // Recursive, brute-force function returning null
+    // If a pair is found, returnList, which is a MutableList is populated with values
     calculate(arr as List<Double>, target.toDouble(), returnList, operand)
-    val stringBuilder = StringBuilder()
-    for (element in returnList) {
-        stringBuilder.append(" $element ")
-    }
-    if(returnList.isEmpty()) stringBuilder.append("N/A")
     return returnList
 }
 
@@ -34,16 +31,15 @@ private fun calculateRecursive(
     ) {
     // Base-cases for searches which would be ineffective
     when {
+        output.isNotEmpty() -> return // If there is already an output found, return.
         (operand == Operand.Addition || operand == Operand.Multiplication) -> if (sum > target) return
         (operand == Operand.Subtraction || operand == Operand.Division) -> if (sum < target) return
     }
     // Base case
     if (sum == target && trace.size > 1) {
-        if (output.isEmpty()) {
             for (element in trace) {
                 if (element % 1.0 == 0.0) output.add(element.toInt()) // Ensure math works for some division
             }
-        }
     }
     // For each one of the remaining elements in this trace
     for (i in 0..remaining.lastIndex) {
