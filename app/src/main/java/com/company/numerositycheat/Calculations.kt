@@ -27,7 +27,7 @@ private fun calculateRecursive(
     output: MutableList<Int>,
     operand: Operand,
     ) {
-    // Base-cases for searches which would be ineffective
+    // Base-cases for searches which would be ineffective to save time
     when {
         output.isNotEmpty() -> return // If there is already an output found, return.
         (operand == Operand.Addition || operand == Operand.Multiplication) -> if (sum > target) return
@@ -48,9 +48,9 @@ private fun calculateRecursive(
         val newRemaining = ArrayList(remaining)
         val newTrace = mutableListOf<Double>()
         for (element in trace)
-            newTrace.add(element)
+            newTrace.add(element) // Copy the previous trace to this new trace and add the new value to it
         newTrace.add(intAt)
-        newRemaining.removeAt(i)
+        newRemaining.removeAt(i) // Remove the extracted value from the new remaining values to iterate through
         // Calculate the new sum provided the operand
         val newSum =
             when (operand) {
@@ -59,6 +59,7 @@ private fun calculateRecursive(
                 Operand.Multiplication -> sum * intAt
                 Operand.Division -> sum / intAt
             }
+        // Recursive call
         calculateRecursive(
             newRemaining,
             newTrace,
