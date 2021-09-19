@@ -15,5 +15,5 @@ NoNumerosity! is an app which I quickly wrote within 24 hours of taking one of t
 
 
 ## Examples
-<img width="300px" src="https://user-images.githubusercontent.com/77797048/133937161-ac604f51-f4b3-49a9-b420-d1e9cc79875d.png">
-<img width="300px" src="https://user-images.githubusercontent.com/77797048/133937164-44abe934-f79e-4c03-ae8b-7a6c892be411.png">
+<img width="300px" src="https://user-images.githubusercontent.com/77797048/133943060-325a44c7-d0e2-4049-982d-ddec168c7923.png">
+<img width="300px" src="https://user-images.githubusercontent.com/77797048/133943065-eca8d21f-7445-4d0c-99cd-e4ae479cb112.png">
