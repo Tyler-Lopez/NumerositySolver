@@ -9,9 +9,7 @@ fun calculate(arr: List<Int>, target: Int, operand: Operand): List<Int> {
 }
 
 private fun calculate(remaining: List<Double>, target: Double, output: MutableList<Int>, operand: Operand) {
-    // If remaining is not inserted, just copy from the mutable list
-
-    // For each one of the remaining elements in this trace
+    // Begin an exhaustive brute-force trace of each possible value
     for (i in 0..remaining.lastIndex) {
         val intAt = remaining[i]
         val newRemaining = ArrayList(remaining)
