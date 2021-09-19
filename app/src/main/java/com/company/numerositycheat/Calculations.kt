@@ -34,6 +34,9 @@ private fun calculateRecursive(
         (operand == Operand.Subtraction || operand == Operand.Division) -> if (sum < target) return
     }
     // Base case for the solution
+    // 1. Check to see sum has exacltly reached the target
+    // 2. Check to ensure the trace is more than just 1 value
+    // 3. Check to ensure that any division has not produced a number that would round down to the target (This might not be necessary?)
     if (sum == target && trace.size > 1 && sum % 1.0 == 0.0) {
             for (element in trace) {
                  output.add(element.toInt())
