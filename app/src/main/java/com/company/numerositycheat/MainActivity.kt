@@ -11,6 +11,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,10 +45,10 @@ class MainActivity : ComponentActivity() {
                     val showTarget = remember { mutableStateOf(value = false) }
                     val showOptions = remember { mutableStateOf(value = false) }
                     val operand = remember { mutableStateOf(value = Operand.Addition) }
-                    val target = remember { mutableStateOf(value = 56) }
+                    val target = remember { mutableStateOf(value = 0) }
                     val options = remember {
                         mutableListOf(
-                            10, 17, 14, 8, 5, 2, 1
+                            0
                         )
                     }
                     val configuration = LocalConfiguration.current
@@ -384,8 +385,10 @@ class MainActivity : ComponentActivity() {
                     }
                     if (showOptions.value) {
                         chooseOptions(chosenNumbers = {
-                            options.clear()
-                            for (element in it) options.add(element)
+                            if(it != null) {
+                                options.clear()
+                                for (element in it) options.add(element)
+                            }
                             showOptions.value = false
                         })
                     }
@@ -443,25 +446,71 @@ fun chooseNumber(chosenOperand: (Int) -> Unit) {
 }
 
 @Composable
-fun chooseOptions(chosenNumbers: (List<Int>) -> Unit) {
+fun chooseOptions(chosenNumbers: (List<Int>?) -> Unit) {
     val returnList = remember { mutableListOf<Int>() }
     var text = remember { mutableStateOf("") }
 
     val changeTest = remember { mutableStateOf(value = false) }
-    Column(modifier = Modifier.fillMaxSize().background(Color.LightGray)) {
-        Row(modifier = Modifier.fillMaxWidth().height(100.dp),
-        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
-            Card(modifier = Modifier
-                .weight(0.5f).fillMaxHeight().align(Alignment.CenterVertically)
-                ) {
-                Text(modifier = Modifier.fillMaxSize(), text = text.value, textAlign = TextAlign.Center, fontSize = 30.sp, fontWeight = FontWeight.Bold)
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.LightGray)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(100.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Card(
+                modifier = Modifier
+                    .weight(0.5f)
+                    .fillMaxHeight()
+                    .align(Alignment.CenterVertically)
+            ) {
+                Text(
+                    modifier = Modifier.fillMaxSize(),
+                    text = text.value,
+                    textAlign = TextAlign.Center,
+                    fontSize = 30.sp,
+                    fontWeight = FontWeight.Bold
+                )
             }
-            Button(modifier = Modifier
-                .weight(0.5f).fillMaxHeight()
-                , onClick = {
-                chosenNumbers(returnList)
-            }) {
-                Text(modifier = Modifier.fillMaxSize(), text = "Submit", textAlign = TextAlign.Center, fontSize = 40.sp, fontWeight = FontWeight.Bold)
+            Column(
+                modifier = Modifier
+                    .weight(0.5f)
+                    .fillMaxHeight()
+            ) {
+                Button(modifier = Modifier
+                    .weight(0.5f)
+                    .fillMaxHeight(), onClick = {
+                    chosenNumbers(returnList)
+                }) {
+                    Text(
+                        modifier = Modifier.fillMaxSize(),
+                        text = "Submit",
+                        textAlign = TextAlign.Center,
+                        fontSize = 30.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+                Button(
+                    modifier = Modifier
+                        .weight(0.5f)
+                        .fillMaxHeight(), onClick = {
+                        chosenNumbers(null)
+                    },
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red)
+                ) {
+                    Text(
+                        modifier = Modifier.fillMaxSize(),
+                        text = "Cancel",
+                        textAlign = TextAlign.Center,
+                        fontSize = 30.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
             }
         }
         Column(
