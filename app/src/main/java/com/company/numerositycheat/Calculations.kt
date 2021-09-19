@@ -34,9 +34,9 @@ private fun calculateRecursive(
         (operand == Operand.Subtraction || operand == Operand.Division) -> if (sum < target) return
     }
     // Base case for the solution
-    if (sum == target && trace.size > 1) {
+    if (sum == target && trace.size > 1 && sum % 1.0 == 0.0) {
             for (element in trace) {
-                if (element % 1.0 == 0.0) output.add(element.toInt()) // Ensure math works for some division
+                 output.add(element.toInt())
             }
     }
     // For each one of the remaining elements in this trace
@@ -48,7 +48,7 @@ private fun calculateRecursive(
             newTrace.add(element)
         newTrace.add(intAt)
         newRemaining.removeAt(i)
-        // New sum
+        // Calculate the new sum provided the operand
         val newSum =
             when (operand) {
                 Operand.Addition -> sum + intAt
