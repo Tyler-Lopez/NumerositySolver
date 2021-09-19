@@ -33,7 +33,7 @@ private fun calculateRecursive(
         (operand == Operand.Addition || operand == Operand.Multiplication) -> if (sum > target) return
         (operand == Operand.Subtraction || operand == Operand.Division) -> if (sum < target) return
     }
-    // Base case
+    // Base case for the solution
     if (sum == target && trace.size > 1) {
             for (element in trace) {
                 if (element % 1.0 == 0.0) output.add(element.toInt()) // Ensure math works for some division
