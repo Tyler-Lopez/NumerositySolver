@@ -13,5 +13,6 @@ NoNumerosity! is an app which I quickly wrote within 24 hours of taking one of t
 
 ## Examples
 In this example, the answer to input into Numerosity would be: 95 -> 11 -> 38 -> 2
+
 <img width="300px" src="https://user-images.githubusercontent.com/77797048/133953754-262bd731-8b74-488b-8860-139aa4a81ae0.png">
 <img width="300px" src="https://user-images.githubusercontent.com/77797048/133953748-57f0783a-d062-4fd4-88f1-fef2c8f55df2.png">
