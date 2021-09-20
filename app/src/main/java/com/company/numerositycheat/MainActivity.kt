@@ -80,7 +80,7 @@ class MainActivity : ComponentActivity() {
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(heightOfTop.value)
+                                .height(200.dp)
                         ) {
                             Box(
                                 modifier = Modifier
@@ -125,49 +125,41 @@ class MainActivity : ComponentActivity() {
                                                                 backgroundColor = Color(43, 120, 64)
                                                             )
                                                         else ButtonDefaults.buttonColors()
-                                                    Button(
+                                                    OutlinedButton(
+                                                        contentPadding = PaddingValues(),
                                                         shape = RoundedCornerShape(5.dp),
                                                         modifier = Modifier
                                                             .padding(2.dp)
                                                             .weight(0.5f)
                                                             .fillMaxHeight()
                                                             .shadow(5.dp),
-                                                        border = BorderStroke(
-                                                            5.dp,
-                                                            Color(0.2f, 0.2f, 0.2f, 0.3f)
-                                                        ),
                                                         onClick = {
                                                             operand.value = currentOperand
 
                                                         },
                                                         colors = backgroundColor,
-                                                        contentPadding = PaddingValues(),
 
                                                         ) {
-                                                        Box(
+                                                        Column(
                                                             modifier = Modifier.fillMaxSize(),
-                                                            contentAlignment = Alignment.Center
-                                                        ) {
-                                                            Column(
-                                                                modifier = Modifier.fillMaxSize(),
-                                                                verticalArrangement = Arrangement.Center,
-                                                                horizontalAlignment = Alignment.CenterHorizontally
-                                                            )
-                                                            {
-                                                                val text = when (count) {
-                                                                    0 -> "+"
-                                                                    1 -> "-"
-                                                                    2 -> "÷"
-                                                                    else -> "×"
-                                                                }
-                                                                Text(
-                                                                    text = text,
-                                                                    fontWeight = FontWeight.Black,
-                                                                    textAlign = TextAlign.Center,
-                                                                    fontSize = 50.sp,
-                                                                    color = Color.White,
-                                                                )
+                                                            verticalArrangement = Arrangement.Center,
+                                                            horizontalAlignment = Alignment.CenterHorizontally
+                                                        )
+                                                        {
+                                                            val text = when (count) {
+                                                                0 -> "+"
+                                                                1 -> "-"
+                                                                2 -> "÷"
+                                                                else -> "×"
                                                             }
+                                                            Text(
+                                                                text = text,
+                                                                fontWeight = FontWeight.Black,
+                                                                textAlign = TextAlign.Center,
+                                                                fontSize = 60.sp,
+                                                                color = Color.White,
+                                                            )
+                                                        }
                                                         count++
                                                     }
                                                 }
@@ -176,79 +168,114 @@ class MainActivity : ComponentActivity() {
                                     }
                                 }
                             }
-                        }
-                        Button(
-                            modifier = Modifier
-                                .weight(0.5f)
-                                .padding(10.dp)
-                                .fillMaxSize(),
-                            onClick = {
-                                showTarget.value = true
-                            },
-                            colors = ButtonDefaults.buttonColors(backgroundColor = Color.LightGray)
-                        ) {
-                            Box(modifier = Modifier.fillMaxSize()) {
-                                Column(
-                                    modifier = Modifier.fillMaxSize(),
-                                    horizontalAlignment = Alignment.CenterHorizontally,
-                                    verticalArrangement = Arrangement.Center
-                                ) {
-                                    Text(
-                                        text = "TARGET",
-                                        fontWeight = FontWeight.Medium,
-                                        fontSize = 30.sp,
-                                    )
-                                    Text(
-                                        text = target.value.toString(),
-                                        fontSize = 50.sp,
-                                        fontWeight = FontWeight.Black,
-                                        textAlign = TextAlign.Center
-                                    )
+                            Button(
+                                modifier = Modifier
+                                    .weight(0.5f)
+                                    .padding(10.dp)
+                                    .fillMaxSize(),
+                                onClick = {
+                                    showTarget.value = true
+                                },
+                                colors = ButtonDefaults.buttonColors(backgroundColor = Color.LightGray)
+                            ) {
+                                Box(modifier = Modifier.fillMaxSize()) {
+                                    Column(
+                                        modifier = Modifier.fillMaxSize(),
+                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                        verticalArrangement = Arrangement.Center
+                                    ) {
+                                        Text(
+                                            text = "TARGET",
+                                            fontWeight = FontWeight.Medium,
+                                            fontSize = 30.sp,
+                                        )
+                                        Text(
+                                            text = target.value.toString(),
+                                            fontSize = 50.sp,
+                                            fontWeight = FontWeight.Black,
+                                            textAlign = TextAlign.Center
+                                        )
 
+                                    }
                                 }
                             }
                         }
-                    }
 
-                    Box(
-                        modifier = Modifier
-                            .weight(0.5f)
-                            .padding(start = 10.dp, end = 10.dp, top = 0.dp, bottom = 10.dp)
-                            .fillMaxSize(),
-                    ) {
-                        Row(modifier = Modifier.fillMaxSize()) {
-                            Button(
-                                modifier = Modifier.weight(0.5f),
-                                contentPadding = PaddingValues(),
-                                onClick = {
-                                    showOptions.value = true
+                        Box(
+                            modifier = Modifier
+                                .weight(0.5f)
+                                .padding(start = 10.dp, end = 10.dp, top = 0.dp, bottom = 10.dp)
+                                .fillMaxSize(),
+                        ) {
+                            Row(modifier = Modifier.fillMaxSize()) {
+                                Button(
+                                    modifier = Modifier.weight(0.5f),
+                                    contentPadding = PaddingValues(),
+                                    onClick = {
+                                        showOptions.value = true
 
-                                },
-                                colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent)
-                            ) {
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .background(
-                                            Brush.verticalGradient(
-                                                listOf(
-                                                    Color(85, 32, 153),
-                                                    Color(114, 61, 184)
+                                    },
+                                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent)
+                                ) {
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                            .background(
+                                                Brush.verticalGradient(
+                                                    listOf(
+                                                        Color(85, 32, 153),
+                                                        Color(114, 61, 184)
+                                                    )
                                                 )
                                             )
-                                        )
-                                        .border(
-                                            5.dp,
-                                            Color.White
-                                        ),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    when (configuration.orientation) {
-                                        Configuration.ORIENTATION_LANDSCAPE -> {
-                                            Row(
-                                                horizontalArrangement = Arrangement.Center,
+                                            .border(
+                                                5.dp,
+                                                Color.White
+                                            ),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Column(
+                                            modifier = Modifier
+                                                .fillMaxSize()
+                                                .padding(5.dp),
+                                            verticalArrangement = Arrangement.Top,
+                                            horizontalAlignment = Alignment.CenterHorizontally
+                                        ) {
+                                            if (options.size < 8) {
+                                                Text(
+                                                    text = "VALUES",
+                                                    fontWeight = FontWeight.Medium,
+                                                    fontSize = 30.sp,
+                                                    color = Color.LightGray
+                                                )
+                                            }
+                                        }
+                                        when (configuration.orientation) {
+                                            Configuration.ORIENTATION_LANDSCAPE -> {
+                                                Row(
+                                                    horizontalArrangement = Arrangement.Center,
+                                                    modifier = Modifier
+                                                        .horizontalScroll(
+                                                            rememberScrollState()
+                                                        )
+                                                ) {
+                                                    for (element in options) {
+                                                        Text(
+                                                            text = element.toString(),
+                                                            textAlign = TextAlign.Center,
+                                                            fontWeight = FontWeight.Bold,
+                                                            color = Color.White,
+                                                            fontSize = 40.sp,
+                                                            modifier = Modifier.padding(horizontal = 5.dp)
+                                                        )
+                                                    }
+                                                }
+                                            }
+                                            else -> Column(
+                                                horizontalAlignment = Alignment.CenterHorizontally,
+                                                verticalArrangement = Arrangement.Center,
                                                 modifier = Modifier
-                                                    .horizontalScroll(
+                                                    .verticalScroll(
                                                         rememberScrollState()
                                                     )
                                             ) {
@@ -259,72 +286,84 @@ class MainActivity : ComponentActivity() {
                                                         fontWeight = FontWeight.Bold,
                                                         color = Color.White,
                                                         fontSize = 40.sp,
-                                                        modifier = Modifier.padding(horizontal = 5.dp)
+                                                        modifier = Modifier.padding(vertical = 5.dp)
                                                     )
                                                 }
                                             }
                                         }
-                                        else -> Column(
-                                            horizontalAlignment = Alignment.CenterHorizontally,
-                                            verticalArrangement = Arrangement.Center,
+
+                                    }
+                                }
+
+
+                                Card(
+                                    modifier = Modifier
+                                        .weight(0.5f)
+                                        .padding(start = 10.dp),
+                                    elevation = 10.dp
+                                ) {
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                            .background(Color.White),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Column(
                                             modifier = Modifier
-                                                .verticalScroll(
-                                                    rememberScrollState()
-                                                )
+                                                .fillMaxSize()
+                                                .padding(5.dp),
+                                            verticalArrangement = Arrangement.Top,
+                                            horizontalAlignment = Alignment.CenterHorizontally
                                         ) {
-                                            for (element in options) {
+                                            if (result.size < 5) {
                                                 Text(
-                                                    text = element.toString(),
-                                                    textAlign = TextAlign.Center,
-                                                    fontWeight = FontWeight.Bold,
-                                                    color = Color.White,
-                                                    fontSize = 40.sp,
-                                                    modifier = Modifier.padding(vertical = 5.dp)
+                                                    text = "ANSWER",
+                                                    fontWeight = FontWeight.Medium,
+                                                    fontSize = 30.sp,
+                                                    color = Color.DarkGray
                                                 )
                                             }
                                         }
-                                    }
 
-                                }
-                            }
+                                        when (configuration.orientation) {
+                                            Configuration.ORIENTATION_LANDSCAPE -> {
 
-
-                            Card(
-                                modifier = Modifier
-                                    .weight(0.5f)
-                                    .padding(start = 10.dp),
-                                elevation = 10.dp
-                            ) {
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .background(Color.White),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    Column(
-                                        modifier = Modifier
-                                            .fillMaxSize()
-                                            .padding(5.dp),
-                                        verticalArrangement = Arrangement.Top,
-                                        horizontalAlignment = Alignment.CenterHorizontally
-                                    ) {
-                                        if (result.size < 5) {
-                                            Text(
-                                                text = "ANSWER",
-                                                fontWeight = FontWeight.Medium,
-                                                fontSize = 30.sp,
-                                                color = Color.DarkGray
-                                            )
-                                        }
-                                    }
-
-                                    when (configuration.orientation) {
-                                        Configuration.ORIENTATION_LANDSCAPE -> {
-
-                                            Row(
-                                                horizontalArrangement = Arrangement.Center,
+                                                Row(
+                                                    horizontalArrangement = Arrangement.Center,
+                                                    modifier = Modifier
+                                                        .horizontalScroll(
+                                                            rememberScrollState()
+                                                        )
+                                                ) {
+                                                    for (element in result) {
+                                                        Text(
+                                                            text = element.toString(),
+                                                            textAlign = TextAlign.Center,
+                                                            fontWeight = FontWeight.Bold,
+                                                            color = Color.DarkGray,
+                                                            fontSize = 50.sp,
+                                                            modifier = Modifier.padding(horizontal = 5.dp)
+                                                        )
+                                                    }
+                                                    if (result.isEmpty()) {
+                                                        Text(
+                                                            text = "N / A",
+                                                            textAlign = TextAlign.Center,
+                                                            fontWeight = FontWeight.Black,
+                                                            color = Color.DarkGray,
+                                                            fontSize = 50.sp,
+                                                            modifier = Modifier.padding(
+                                                                horizontal = 10.dp
+                                                            )
+                                                        )
+                                                    }
+                                                }
+                                            }
+                                            else -> Column(
+                                                horizontalAlignment = Alignment.CenterHorizontally,
+                                                verticalArrangement = Arrangement.Center,
                                                 modifier = Modifier
-                                                    .horizontalScroll(
+                                                    .verticalScroll(
                                                         rememberScrollState()
                                                     )
                                             ) {
@@ -335,7 +374,7 @@ class MainActivity : ComponentActivity() {
                                                         fontWeight = FontWeight.Bold,
                                                         color = Color.DarkGray,
                                                         fontSize = 50.sp,
-                                                        modifier = Modifier.padding(horizontal = 5.dp)
+                                                        modifier = Modifier.padding(vertical = 5.dp)
                                                     )
                                                 }
                                                 if (result.isEmpty()) {
@@ -352,64 +391,32 @@ class MainActivity : ComponentActivity() {
                                                 }
                                             }
                                         }
-                                        else -> Column(
-                                            horizontalAlignment = Alignment.CenterHorizontally,
-                                            verticalArrangement = Arrangement.Center,
-                                            modifier = Modifier
-                                                .verticalScroll(
-                                                    rememberScrollState()
-                                                )
-                                        ) {
-                                            for (element in result) {
-                                                Text(
-                                                    text = element.toString(),
-                                                    textAlign = TextAlign.Center,
-                                                    fontWeight = FontWeight.Bold,
-                                                    color = Color.DarkGray,
-                                                    fontSize = 50.sp,
-                                                    modifier = Modifier.padding(vertical = 5.dp)
-                                                )
-                                            }
-                                            if (result.isEmpty()) {
-                                                Text(
-                                                    text = "N / A",
-                                                    textAlign = TextAlign.Center,
-                                                    fontWeight = FontWeight.Black,
-                                                    color = Color.DarkGray,
-                                                    fontSize = 50.sp,
-                                                    modifier = Modifier.padding(
-                                                        horizontal = 10.dp
-                                                    )
-                                                )
-                                            }
-                                        }
+
                                     }
 
                                 }
-
                             }
                         }
                     }
-                }
-                if (showTarget.value) {
-                    chooseNumber(chosenOperand = {
-                        target.value = it
-                        showTarget.value = false
-                    })
-                }
-                if (showOptions.value) {
-                    chooseOptions(chosenNumbers = {
-                        if (it != null) {
-                            options.clear()
-                            for (element in it) options.add(element)
-                        }
-                        showOptions.value = false
-                    })
+                    if (showTarget.value) {
+                        chooseNumber(chosenOperand = {
+                            target.value = it
+                            showTarget.value = false
+                        })
+                    }
+                    if (showOptions.value) {
+                        chooseOptions(chosenNumbers = {
+                            if (it != null) {
+                                options.clear()
+                                for (element in it) options.add(element)
+                            }
+                            showOptions.value = false
+                        })
+                    }
                 }
             }
         }
     }
-}
 }
 
 
@@ -473,7 +480,7 @@ fun chooseOptions(chosenNumbers: (List<Int>?) -> Unit) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(100.dp),
+                .height(150.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
@@ -481,15 +488,19 @@ fun chooseOptions(chosenNumbers: (List<Int>?) -> Unit) {
                 modifier = Modifier
                     .weight(0.5f)
                     .fillMaxHeight()
-                    .align(Alignment.CenterVertically)
             ) {
-                Text(
+                Column(
                     modifier = Modifier.fillMaxSize(),
-                    text = text.value,
-                    textAlign = TextAlign.Center,
-                    fontSize = 30.sp,
-                    fontWeight = FontWeight.Bold
-                )
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = text.value,
+                        textAlign = TextAlign.Center,
+                        fontSize = 30.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
             }
             Column(
                 modifier = Modifier
@@ -498,11 +509,10 @@ fun chooseOptions(chosenNumbers: (List<Int>?) -> Unit) {
             ) {
                 Button(modifier = Modifier
                     .weight(0.5f)
-                    .fillMaxHeight(), onClick = {
+                    .fillMaxWidth(), onClick = {
                     chosenNumbers(returnList)
                 }) {
                     Text(
-                        modifier = Modifier.fillMaxSize(),
                         text = "Submit",
                         textAlign = TextAlign.Center,
                         fontSize = 30.sp,
@@ -512,13 +522,12 @@ fun chooseOptions(chosenNumbers: (List<Int>?) -> Unit) {
                 Button(
                     modifier = Modifier
                         .weight(0.5f)
-                        .fillMaxHeight(), onClick = {
+                        .fillMaxWidth(), onClick = {
                         chosenNumbers(null)
                     },
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(128, 35, 31))
                 ) {
                     Text(
-                        modifier = Modifier.fillMaxSize(),
                         text = "Cancel",
                         color = Color.White,
                         textAlign = TextAlign.Center,
