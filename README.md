@@ -1,6 +1,8 @@
 # NoNumerosity!
 Game-based  assessments used in some interview screenings, which HireVue utilizes, are not particularally enjoyable or effective. This in-development Android app will automatically solve the arithmetic for one of them - Numerosity, instantly yielding the correct answer.
 
+Published on the Play Store: https://play.google.com/store/apps/details?id=com.company.numerositycheat
+
 ## What is Numerosity?
 <img width="100px" src="https://user-images.githubusercontent.com/77797048/133898659-003fcaca-6906-4e40-8883-171cc16c60a3.png"><img width="400px" src="https://user-images.githubusercontent.com/77797048/133942797-ba9724a8-733a-48ea-bd89-67a4f5b12713.png">
 
